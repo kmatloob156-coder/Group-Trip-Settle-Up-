@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Group Trip Settle-Up - shared expense tracker with multi-currency support and minimum-payment settlement.">
+  <title>Group Trip Settle-Up</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">⇄</div>
+      <div><strong>Group Trip Settle-Up</strong><span>Travel • Finance</span></div>
+    </div>
+    <button id="clearAllBtn" class="ghost danger">Clear trip</button>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">SMART GROUP EXPENSE TRACKER</p>
+        <h1>Split the trip.<br><span>Not the friendship.</span></h1>
+        <p>Track shared expenses, convert currencies and settle the group with the fewest payments.</p>
+      </div>
+      <div class="hero-card">
+        <div><span>Total expenses</span><strong id="totalDisplay">₹0.00</strong></div>
+        <div><span>Members</span><strong id="memberCount">0</strong></div>
+        <div><span>Payments needed</span><strong id="paymentCount">0</strong></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <div class="card-title"><h2>1. Group members</h2><span id="memberHint">Add people</span></div>
+        <form id="memberForm" class="inline-form">
+          <input id="memberName" type="text" maxlength="40" placeholder="e.g. Matloob" required>
+          <button class="primary" type="submit">Add member</button>
+        </form>
+        <div id="membersList" class="chips"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><h2>2. Add expense</h2><span>Any currency</span></div>
+        <form id="expenseForm">
+          <label>Description<input id="expenseDesc" maxlength="80" placeholder="Hotel booking" required></label>
+          <div class="form-row">
+            <label>Amount<input id="expenseAmount" type="number" min="0.01" step="0.01" placeholder="100" required></label>
+            <label>Currency
+              <select id="expenseCurrency">
+                <option>INR</option><option>USD</option><option>EUR</option><option>GBP</option><option>AED</option><option>JPY</option>
+              </select>
+            </label>
+          </div>
+          <label>Paid by<select id="expensePayer" required></select></label>
+          <label>Split between <span class="muted">(equal split)</span></label>
+          <div id="splitMembers" class="check-grid"></div>
+          <button class="primary full" type="submit">+ Add expense</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-title"><h2>Expenses</h2><span id="expenseCount">0 items</span></div>
+      <div id="expensesEmpty" class="empty">Add members and your first expense to get started.</div>
+      <div id="expenseTableWrap" class="table-wrap hidden">
+        <table>
+          <thead><tr><th>Expense</th><th>Paid by</th><th>Amount</th><th>Split</th><th></th></tr></thead>
+          <tbody id="expenseTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="settle-grid">
+      <div class="card">
+        <div class="card-title"><h2>Balances</h2><span>Base currency: INR</span></div>
+        <div id="balances"></div>
+      </div>
+      <div class="card accent-card">
+        <div class="card-title"><h2>Minimum settlement</h2><span>Fewest transfers</span></div>
+        <p class="muted">All balances are converted to INR using the latest saved exchange rates. If the exchange-rate API is unavailable, a built-in fallback is used.</p>
+        <div id="settlements" class="settlements"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-title"><h2>Currency rates</h2><button id="refreshRates" class="text-btn">↻ Refresh</button></div>
+      <p id="rateStatus" class="muted">Using saved/fallback rates until refreshed.</p>
+      <div id="rates" class="rate-grid"></div>
+    </section>
+
+    <footer>
+      <span>Group Trip Settle-Up • HTML + CSS + JavaScript</span>
+      <span>Data is stored locally in your browser.</span>
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
